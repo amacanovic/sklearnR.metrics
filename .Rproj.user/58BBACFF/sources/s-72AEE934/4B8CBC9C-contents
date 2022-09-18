@@ -1,9 +1,8 @@
 ---
-title: 'sklearnR.metrics'
+title: "sklearnR.metrics"
 author: "Ana Macanovic"
-output:
-  html_document:
-    df_print: paged
+output: github_document
+always_allow_html: true
 vignette: |
   %\VignetteIndexEntry{performance-measures} %\VignetteEngine{knitr::rmarkdown} %\VignetteEncoding{UTF-8}
 ---

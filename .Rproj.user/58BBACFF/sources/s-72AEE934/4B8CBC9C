@@ -3,7 +3,7 @@
     "path": "E:/Projects/R packages/sklearnR.metrics/README.Rmd",
     "project_path": "README.Rmd",
     "type": "r_markdown",
-    "hash": "1295714744",
+    "hash": "1986975189",
     "contents": "",
     "dirty": false,
     "created": 1663430999829.0,
@@ -11,15 +11,15 @@
     "relative_order": 6,
     "properties": {
         "tempName": "Untitled1",
-        "cursorPosition": "44,2",
-        "scrollLine": "20"
+        "cursorPosition": "9,0",
+        "scrollLine": "0"
     },
     "folds": "",
-    "lastKnownWriteTime": 1663499148,
+    "lastKnownWriteTime": 1663499892,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1663499147624,
+    "last_content_update": 1663499890760,
     "read_only": false,
     "read_only_alternatives": []
 }
