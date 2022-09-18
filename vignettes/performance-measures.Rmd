@@ -1,0 +1,190 @@
+---
+title: "performance-measures"
+author: "Ana Macanovic"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{performance-measures}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+```{r, message=FALSE, warning = FALSE, echo = F} 
+library(dplyr) 
+library(kableExtra) 
+library(knitr)
+```
+
+
+## This package
+
+This package calculates a range of different F-scores (and accuracy
+scores) for multiclass and multilabel classification problems in R. Its
+purpose is to make it easy to calculate F-scores that match those given
+by the sklearn.metrics functions, but also compared them to some of the
+scores produced by R packages that have functions for multilabel and
+multiclass F-scores (HEMDAG and mlr).
+
+This vignette explains package use and lists references for
+individual measures. 
+
+To install the package from github, use the following command:
+```{r}
+# devtools::install_github("amacanovic/sklearnR.metrics")
+```
+
+After installing, you will be able to load the package:
+```{r}
+library(sklearnR.metrics)
+```
+
+
+## Multilabel measures
+
+The main functionality of this package is the integration of multiple
+types of multilabel F-scores and accuracy measures. It includes
+functions comparable to those in sklearn, but also packages in R, such
+as HEMDAG and mlr.
+
+
+This function takes matrices with observations in rows and labels in
+columns as follows:
+
+```{r}
+truth_matrix <- matrix(c(0, 1, 0, 0, 1, 1, 0, 1, 1), nrow = 3, ncol = 3)
+
+prediction_matrix  <-  matrix(c(0, 1, 1, 0, 1, 1, 0, 1, 0), nrow = 3, ncol = 3)
+
+```
+
+For clarification, in this example, the first row of the truth matrix
+denotes the first observation, with the first label being negative, the
+second positive, and the third negative again:
+
+```{r}
+(truth_matrix)
+```
+
+
+The function takes the truth and prediction matrices as input
+(allowing only for values 1 and 0, the former denoting presence of a
+label, the latter its absence), but also requires you to specify two
+parameters:
+
+1. the referece category against which the F-score is to be calculated
+(1 is the presence of the label, 0 is the absence of the label)
+
+2. the set of measures to be output by the function; this parameter can
+be set to `<code>`both`</code>` for all measures, `label_wise`</code>`
+for measures calculated per label only, and
+`<code>`observation_wise`</code>` for measures calculated per observation
+only:
+
+```{r echo=T} 
+performances <- performance_scores_multilabel(truth = truth_matrix,
+                                              prediction = prediction_matrix,  
+                                              reference_category = 1,  
+                                              metrics = "both")
+```
+                                              
+                                              
+This function outputs a set of measures:
+
+- Label-wise metrics: these metrics are calculated either per
+individual label and then averaged; or are calculated across all
+
+**1. Macro F-score** (average of F-scores for each label);
+corresponds to [sklearn.metrics.f1_score](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.f1_score.html) with parameter ‘average’ set to ‘macro’;
+
+**2. Weighted F-score** (average of F-scores for each label
+weighted by label frequencies); corresponds to [sklearn.metrics.f1_score](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.f1_score.html)
+with parameter ‘average’ set to ‘weighted’;
+
+**3. F-score of averages** (harmonic mean of average precision
+and recall scores per label), as suggested [here](https://arxiv.org/pdf/1911.03347.pdf);
+
+**4. Micro F-score** (calculated using total true positives,
+false negatives and false positives across all labels); corresponds to
+[sklearn.metrics.f1_score](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.f1_score.html)
+with parameter ‘micro’ set to ‘weighted’;
+
+**5. Accuracy** (calculated as the percentage of correctly
+predicted categories across all labels);
+
+- Observation-wise metrics: these metrics are calculated per
+observation, and then averaged for the whole dataset:
+
+
+**6. Observation-based micro f-score** (harmonic mean of
+precision and recall calculated per observation); corresponds to the
+output of the R mlr package [multilabel.f1](https://mlr.mlr-org.com/articles/tutorial/measures.html)
+score;
+
+**7. Average observation-based micro f-score** (harmonic mean of
+average precision and recall scores per observation); corresponds to F
+score output of HEMDAG R package [F.measure.multilabel](https://search.r-project.org/CRAN/refmans/HEMDAG/html/multilabel.F.measure.html)
+function with b.per.example set to ‘FALSE’;
+
+**8. Observation-based F-score** (average of F-scores for each
+observation); corresponds to [sklearn.metrics.f1_score](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.f1_score.html)
+with parameter ‘average’ set to ‘samples’ and avF score output of HEMDAG
+R package [F.measure.multilabel](https://search.r-project.org/CRAN/refmans/HEMDAG/html/multilabel.F.measure.html)
+function with b.per.example set to ‘FALSE’;
+
+**9. Subset accuracy** (calculated as the percentage of
+observations where all labels were correctly predicted); corresponds to
+[sklearn.metrics.accuracy_acore](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.accuracy_score.html)
+for multi-label problems.
+
+
+```{r, echo=FALSE, message=FALSE}
+kable(head(performances[, 1:5], n=1) ,"html", booktabs = T) %>%
+  kable_styling(bootstrap_options="striped", full_width=T)
+```
+
+```{r, echo=FALSE, message=FALSE}
+kable(head(performances[, 6:9], n=1) ,"html", booktabs = T) %>%
+  kable_styling(bootstrap_options="striped", full_width=T)
+```
+
+
+
+## Multiclass measures
+
+This package includes a function
+`performance_scores_multiclass` that calculated scores
+comparable to those obtained by [sklearn](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.f1_score.html)
+and [accuracy_score](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.accuracy_score.html), as well as the function [f_meas_vec](https://yardstick.tidymodels.org/reference/f_meas.html)
+from the yardstick R package.
+
+
+The function takes numerical vectors as input, e.g.:
+
+```{r echo=T}
+
+truth_vector <- c(0, 1, 2, 0, 1, 2)
+
+prediction_vector <- c(0, 2, 1, 0, 0, 1)
+
+performances  <-  performance_scores_multiclass(truth = truth_vector, 
+                                                prediction = prediction_vector)
+
+```
+
+And outputs a dataframe with three measures:
+
+**1. Macro F-score** (calculated as the average of F-scores of individual labels). 
+This measure corresponds to sklearn.metrics.f1_score() with parameter 'average' 
+set to 'macro' and the yardstick R package f_meas_vec with parameter 'estimate' set to 'macro';
+
+**2. Weighted F-score** (calculated as the average of F-scores of individual labels weighted by label frequencies);
+corresponds to sklearn.metrics.f1_score with parameter 'average' set to 'weighted';
+
+**3. Micro F-score / accuracy** (calculated as the F-score using precision and
+'recall averaged over all categories), corresponds to sklearn.metrics.f1_score with parameter 'average'
+'set to 'micro' and the yardstick R package f_meas_vec with parameter 'estimate' set to 'micro'.
+
+```{r, echo=FALSE, message=FALSE}
+kable(head(performances, n=1) ,"html", booktabs = T) %>%
+  kable_styling(bootstrap_options="striped", full_width=T)
+```

@@ -1,0 +1,7 @@
+"0","performances <- performance_scores_multilabel(truth = truth_matrix,"
+"0","                                              prediction = prediction_matrix,  "
+"0","                                              reference_category = 1,  "
+"0","                                              measures = ""both"")"
+"2","Error in performance_scores_multilabel(truth = truth_matrix, prediction = prediction_matrix,  : 
+  unused argument (measures = ""both"")
+"
