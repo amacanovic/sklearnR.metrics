@@ -1,6 +1,5 @@
 sklearnR.metrics
 ================
-Ana Macanovic
 
 <br>
 
@@ -12,12 +11,12 @@ and multi-label classification measures in R. Currently, different R
 packages implement different types of averaging for measure calculation.
 Especially when it comes to multi-label problems, this can cause issues
 with interpretation and comparability of results across different
-applications. In the documentaton, we clearly denote which metrics match
-those output by the sklearn.metrics functions - which are most widely
-used in implementations using python - but also those given by several R
-packages that offer options for multi-class (yardstick package) or
-multi-label (HEMDAG and mlr) classifcation performance measure
-calculation.
+applications. In the documentation, we clearly denote which metrics
+match those output by the sklearn.metrics functions - which are most
+widely used in implementations using python - but also those given by
+several R packages that offer options for multi-class (yardstick
+package) or multi-label (HEMDAG and mlr) classification performance
+measure calculation.
 
 This package currently supports a variety of F-score (F1) measures for
 multi-class and multi-label classification, as well as the accuracy
@@ -29,8 +28,11 @@ suggestions if you have any.
 To install the package from github, use the following command:
 
 ``` r
-# devtools::install_github("amacanovic/sklearnR.metrics")
+devtools::install_github("amacanovic/sklearnR.metrics")
 ```
+
+    ## Skipping install of 'sklearnR.metrics' from a github remote, the SHA1 (00e7098e) has not changed since last install.
+    ##   Use `force = TRUE` to force installation
 
 After installing, you will be able to load the package:
 
