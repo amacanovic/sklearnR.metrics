@@ -31,9 +31,6 @@ To install the package from github, use the following command:
 devtools::install_github("amacanovic/sklearnR.metrics")
 ```
 
-    ## Skipping install of 'sklearnR.metrics' from a github remote, the SHA1 (00e7098e) has not changed since last install.
-    ##   Use `force = TRUE` to force installation
-
 After installing, you will be able to load the package:
 
 ``` r
