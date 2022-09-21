@@ -19,9 +19,9 @@ package) or multi-label (HEMDAG and mlr) classification performance
 measure calculation.
 
 This package currently supports a variety of F-score (F1) measures for
-multi-class and multi-label classification, as well as the accuracy
-score. More measures are planned to be added; please share your
-suggestions if you have any.
+multi-class and multi-label classification, as well as the accuracy and
+subset-accuracy scores. More measures are planned to be added; please
+share your suggestions on measures to implement in “Issues”.
 
 ## Installing and using the package
 
@@ -187,7 +187,7 @@ recall scores per label), as suggested
 **4. Micro F-score** (calculated using total true positives, false
 negatives and false positives across all labels); corresponds to
 [sklearn.metrics.f1_score](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.f1_score.html)
-with parameter ‘micro’ set to ‘weighted’;
+with parameter ‘average’ set to ‘micro’;
 
 **5. Accuracy** (calculated as the percentage of correctly predicted
 categories across all labels);
@@ -198,13 +198,13 @@ categories across all labels);
 **6. Observation-based micro f-score** (harmonic mean of precision and
 recall calculated per observation); corresponds to the output of the R
 mlr package
-[multi-label.f1](https://mlr.mlr-org.com/articles/tutorial/measures.html)
+[multilabel.f1](https://mlr.mlr-org.com/articles/tutorial/measures.html)
 score;
 
 **7. Average observation-based micro f-score** (harmonic mean of average
 precision and recall scores per observation); corresponds to F score
 output of HEMDAG R package
-[F.measure.multi-label](https://search.r-project.org/CRAN/refmans/HEMDAG/html/multi-label.F.measure.html)
+[F.measure.multilabel](https://search.r-project.org/CRAN/refmans/HEMDAG/html/multilabel.F.measure.html)
 function with b.per.example set to ‘FALSE’;
 
 **8. Observation-based F-score** (average of F-scores for each
@@ -212,7 +212,7 @@ observation); corresponds to
 [sklearn.metrics.f1_score](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.f1_score.html)
 with parameter ‘average’ set to ‘samples’ and avF score output of HEMDAG
 R package
-[F.measure.multi-label](https://search.r-project.org/CRAN/refmans/HEMDAG/html/multilabel.F.measure.html)
+[F.measure.multilabel](https://search.r-project.org/CRAN/refmans/HEMDAG/html/multilabel.F.measure.html)
 function with b.per.example set to ‘FALSE’;
 
 **9. Subset accuracy** (calculated as the percentage of observations
@@ -223,7 +223,7 @@ for multi-label problems.
 ## Multi-class measures
 
 This package also includes a function `performance_scores_multiclass`
-that calculated scores comparable to those obtained by sklearn’s
+that calculates scores comparable to those obtained by sklearn’s
 [f1_score](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.f1_score.html)
 and
 [accuracy_score](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.accuracy_score.html)
@@ -276,16 +276,19 @@ micro_f\_score_acc
 
 **1. Macro F-score** (calculated as the average of F-scores of
 individual labels). This measure corresponds to
-sklearn.metrics.f1_score() with parameter ‘average’ set to ‘macro’ and
-the yardstick R package f_meas_vec with parameter ‘estimate’ set to
-‘macro’;
+[sklearn.metrics.f1_score](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.f1_score.html)
+with parameter ‘average’ set to ‘macro’ and the yardstick R package
+[f_meas_vec](https://yardstick.tidymodels.org/reference/f_meas.html)
+with parameter ‘estimate’ set to ‘macro’;
 
 **2. Weighted F-score** (calculated as the average of F-scores of
 individual labels weighted by label frequencies); corresponds to
-sklearn.metrics.f1_score with parameter ‘average’ set to ‘weighted’;
+[sklearn.metrics.f1_score](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.f1_score.html)
+with parameter ‘average’ set to ‘weighted’;
 
 **3. Micro F-score / accuracy** (calculated as the F-score using
 precision and ‘recall averaged over all categories), corresponds to
-sklearn.metrics.f1_score with parameter ’average’ ‘set to ’micro’ and
-the yardstick R package f_meas_vec with parameter ‘estimate’ set to
-‘micro’.
+[sklearn.metrics.f1_score](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.f1_score.html)
+with parameter ’average’ ‘set to ’micro’ and the yardstick R package
+[f_meas_vec](https://yardstick.tidymodels.org/reference/f_meas.html)
+with parameter ‘estimate’ set to ‘micro’.
